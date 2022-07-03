@@ -11,8 +11,18 @@ import SwiftUI
 struct AsyncAlgorithmsApp: App {
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                MoviesView()
+            TabView {
+                NavigationView {
+                    MoviesView()
+                }
+                .tabItem {
+                    Label("Movies", systemImage: "film")
+                }
+
+                EventsView()
+                .tabItem {
+                    Label("Events", systemImage: "clock.arrow.2.circlepath")
+                }
             }
         }
     }
