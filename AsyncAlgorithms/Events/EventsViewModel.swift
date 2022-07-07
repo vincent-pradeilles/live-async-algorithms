@@ -12,8 +12,7 @@ class EventsViewModel: ObservableObject {
     static let people = ["Luke", "Leia", "Han"]
     static let states = ["angry 😡", "busy 😬", "sleepy 😪"]
 
-    @Published var person: String = people.randomElement()!
-    @Published var state: String = states.randomElement()!
+    @Published var text = ""
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -35,9 +34,8 @@ class EventsViewModel: ObservableObject {
         .map { _ in Self.states.randomElement()! }
 
         Publishers.CombineLatest(peoplePublisher, statePublisher)
-            .sink(receiveValue: { [weak self] (people, state) in
-                self?.person = Self.people.randomElement()!
-                self?.state = Self.states.randomElement()!
+            .sink(receiveValue: { [weak self] (person, state) in
+                self?.text = "\(person) is currently \(state)"
 
             })
             .store(in: &cancellables)

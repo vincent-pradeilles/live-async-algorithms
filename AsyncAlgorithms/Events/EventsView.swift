@@ -12,7 +12,7 @@ struct EventsView: View {
     @StateObject var viewModel = EventsViewModel()
 
     var body: some View {
-        Text("\(viewModel.person) is currently \(viewModel.state)")
+        Text(viewModel.text)
             .onAppear {
                 viewModel.startEvents()
             }

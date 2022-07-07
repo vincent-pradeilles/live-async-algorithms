@@ -47,7 +47,8 @@ func getMovies(page: Int = 1) -> AnyPublisher<MovieResponse, Never> {
 //MARK: - Search
 
 func searchMovies(for query: String) -> AnyPublisher<MovieResponse, Never> {
-    let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(query)")!
+    let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(encodedQuery!)")!
 
     return URLSession
         .shared
