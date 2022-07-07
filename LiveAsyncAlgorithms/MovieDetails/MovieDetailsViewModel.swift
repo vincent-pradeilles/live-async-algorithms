@@ -7,7 +7,9 @@
 
 import Foundation
 import Combine
+import AsyncAlgorithms
 
+@MainActor
 class MovieDetailsViewModel: ObservableObject {
     
     let movie: Movie
@@ -15,20 +17,16 @@ class MovieDetailsViewModel: ObservableObject {
     @Published var data: (credits: [MovieCastMember],
                           reviews: [MovieReview]) = ([], [])
 
-    private var cancellables = Set<AnyCancellable>()
-
     init(movie: Movie) {
         self.movie = movie
     }
 
-    func fetchData() {
+    func fetchData() async {
         let creditsPublisher = getCredits(for: movie).map(\.cast)
         let reviewsPublisher = getReviews(for: movie).map(\.results)
 
-        Publishers.CombineLatest(creditsPublisher, reviewsPublisher)
-            .receive(on: DispatchQueue.main)
-            .map { (credits: $0.0, reviews: $0.1) }
-            .assign(to: \.data, on: self)
-            .store(in: &cancellables)
+        for await (credits, reviews) in combineLatest(creditsPublisher.values, reviewsPublisher.values) {
+            data = (credits, reviews)
+        }
     }
 }

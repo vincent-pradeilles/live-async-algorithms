@@ -28,7 +28,7 @@ class MoviesViewModel: ObservableObject {
     private var currentPage = 1
 
     func listenToSearchQuery() async {
-        for await searchQuery in $searchQuery.values.debounce(for: .microseconds(300)) {
+        for await searchQuery in $searchQuery.values.debounce(for: .milliseconds(300)) {
             searchResults = await searchMovies(for: searchQuery).results
         }
     }

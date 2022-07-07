@@ -105,8 +105,8 @@
 		BF929D2E287772CA002F8F5A /* MovieDetails */ = {
 			isa = PBXGroup;
 			children = (
-				BF929D2F287772CA002F8F5A /* MovieDetailsViewModel.swift */,
 				BF929D30287772CA002F8F5A /* MovieDetailsView.swift */,
+				BF929D2F287772CA002F8F5A /* MovieDetailsViewModel.swift */,
 			);
 			path = MovieDetails;
 			sourceTree = "<group>";

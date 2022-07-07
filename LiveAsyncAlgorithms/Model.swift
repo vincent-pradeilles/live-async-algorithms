@@ -110,6 +110,19 @@ func getCredits(for movie: Movie) -> AnyPublisher<MovieCreditsResponse, Never> {
         .eraseToAnyPublisher()
 }
 
+func getCredits(for movie: Movie) async -> MovieCreditsResponse {
+    let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie.id)/credits?api_key=\(apiKey)")!
+
+    do {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decoded = try jsonDecoder.decode(MovieCreditsResponse.self, from: data)
+
+        return decoded
+    } catch {
+        return MovieCreditsResponse(cast: [])
+    }
+}
+
 //MARK: - Reviews
 
 struct MovieReview: Identifiable, Equatable, Decodable {
@@ -132,4 +145,17 @@ func getReviews(for movie: Movie) -> AnyPublisher<MovieReviewsResponse, Never> {
         .decode(type: MovieReviewsResponse.self, decoder: jsonDecoder)
         .replaceError(with: MovieReviewsResponse(results: []))
         .eraseToAnyPublisher()
+}
+
+func getReviews(for movie: Movie) async -> MovieReviewsResponse {
+    let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie.id)/reviews?api_key=\(apiKey)")!
+
+    do {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decoded = try jsonDecoder.decode(MovieReviewsResponse.self, from: data)
+
+        return decoded
+    } catch {
+        return MovieReviewsResponse(results: [])
+    }
 }

@@ -40,8 +40,8 @@ struct MovieDetailsView: View {
             }
         }
         .navigationBarTitle(viewModel.movie.title)
-        .onAppear {
-            viewModel.fetchData()
+        .task {
+            await viewModel.fetchData()
         }
     }
 }
