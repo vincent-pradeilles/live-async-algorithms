@@ -7,7 +7,9 @@
 
 import Foundation
 import Combine
+import AsyncAlgorithms
 
+@MainActor
 class MoviesViewModel: ObservableObject {
     
     @Published private var upcommingMovies = [Movie]()
@@ -24,36 +26,20 @@ class MoviesViewModel: ObservableObject {
     }
 
     private var currentPage = 1
-    private var cancellables = Set<AnyCancellable>()
 
-    init() {
-        $searchQuery
-            .debounce(for: 0.3, scheduler: DispatchQueue.main)
-            .flatMap { searchMovies(for: $0) }
-            .map(\.results)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$searchResults)
+    func listenToSearchQuery() async {
+        for await searchQuery in $searchQuery.values.debounce(for: .microseconds(300)) {
+            searchResults = await searchMovies(for: searchQuery).results
+        }
     }
 
-    func fetchInitialData() {
+    func fetchInitialData() async {
         currentPage = 1
-        
-        getMovies()
-            .map(\.results)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.upcommingMovies, on: self)
-            .store(in: &cancellables)
+        upcommingMovies = await getMovies().results
     }
 
-    func fetchMoreData() {
+    func fetchMoreData() async {
         currentPage += 1
-
-        getMovies(page: currentPage)
-            .map(\.results)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] newMovies in
-                self?.upcommingMovies.append(contentsOf: newMovies)
-            })
-            .store(in: &cancellables)
+        upcommingMovies += await getMovies(page: currentPage).results
     }
 }

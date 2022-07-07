@@ -36,19 +36,22 @@ struct MoviesView: View {
                     }
                 }
             }
-            .onAppear {
+            .task {
                 if movie == viewModel.movies.last {
-                    viewModel.fetchMoreData()
+                    await viewModel.fetchMoreData()
                 }
             }
         }
         .navigationTitle("Upcomming Movies")
-        .onAppear {
-            viewModel.fetchInitialData()
+        .task {
+            await viewModel.fetchInitialData()
+        }
+        .task {
+            await viewModel.listenToSearchQuery()
         }
         .searchable(text: $viewModel.searchQuery)
         .refreshable {
-            viewModel.fetchInitialData()
+            await viewModel.fetchInitialData()
         }
     }
 }

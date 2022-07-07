@@ -44,10 +44,24 @@ func getMovies(page: Int = 1) -> AnyPublisher<MovieResponse, Never> {
         .eraseToAnyPublisher()
 }
 
+func getMovies(page: Int = 1) async -> MovieResponse {
+    let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)&page=\(page)")!
+
+    do {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decoded = try jsonDecoder.decode(MovieResponse.self, from: data)
+
+        return decoded
+    } catch {
+        return MovieResponse(results: [])
+    }
+}
+
 //MARK: - Search
 
 func searchMovies(for query: String) -> AnyPublisher<MovieResponse, Never> {
-    let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(query)")!
+    let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+    let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(encodedQuery)")!
 
     return URLSession
         .shared
@@ -56,6 +70,20 @@ func searchMovies(for query: String) -> AnyPublisher<MovieResponse, Never> {
         .decode(type: MovieResponse.self, decoder: jsonDecoder)
         .replaceError(with: MovieResponse(results: []))
         .eraseToAnyPublisher()
+}
+
+func searchMovies(for query: String) async -> MovieResponse {
+    let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+    let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(encodedQuery)")!
+
+    do {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decoded = try jsonDecoder.decode(MovieResponse.self, from: data)
+
+        return decoded
+    } catch {
+        return MovieResponse(results: [])
+    }
 }
 
 //MARK: - Credits
