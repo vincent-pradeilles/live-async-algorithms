@@ -17,6 +17,7 @@
 		BF929D2D287772C2002F8F5A /* MoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF929D2B287772C2002F8F5A /* MoviesViewModel.swift */; };
 		BF929D31287772CA002F8F5A /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF929D2F287772CA002F8F5A /* MovieDetailsViewModel.swift */; };
 		BF929D32287772CA002F8F5A /* MovieDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF929D30287772CA002F8F5A /* MovieDetailsView.swift */; };
+		BF929D352877730E002F8F5A /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = BF929D342877730E002F8F5A /* AsyncAlgorithms */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF929D352877730E002F8F5A /* AsyncAlgorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,8 +87,8 @@
 		BF929D24287772B8002F8F5A /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				BF929D25287772B8002F8F5A /* EventsViewModel.swift */,
 				BF929D26287772B8002F8F5A /* EventsView.swift */,
+				BF929D25287772B8002F8F5A /* EventsViewModel.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -125,6 +127,9 @@
 			dependencies = (
 			);
 			name = LiveAsyncAlgorithms;
+			packageProductDependencies = (
+				BF929D342877730E002F8F5A /* AsyncAlgorithms */,
+			);
 			productName = LiveAsyncAlgorithms;
 			productReference = BF929D0E28777250002F8F5A /* LiveAsyncAlgorithms.app */;
 			productType = "com.apple.product-type.application";
@@ -153,6 +158,9 @@
 				Base,
 			);
 			mainGroup = BF929D0528777250002F8F5A;
+			packageReferences = (
+				BF929D332877730E002F8F5A /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
+			);
 			productRefGroup = BF929D0F28777250002F8F5A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -387,6 +395,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BF929D332877730E002F8F5A /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BF929D342877730E002F8F5A /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF929D332877730E002F8F5A /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BF929D0628777250002F8F5A /* Project object */;
 }
