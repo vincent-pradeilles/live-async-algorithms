@@ -11,6 +11,13 @@ import AsyncAlgorithms
 
 @MainActor
 class MoviesViewModel: ObservableObject {
+
+    enum Command {
+        case fetchInitialData
+        case fetchMoreData
+    }
+
+    private(set) var commandChannel = AsyncChannel<Command>()
     
     @Published private var upcommingMovies = [Movie]()
 
@@ -33,12 +40,23 @@ class MoviesViewModel: ObservableObject {
         }
     }
 
-    func fetchInitialData() async {
+    func listenToCommands() async {
+        for await command in commandChannel {
+            switch command {
+            case .fetchInitialData:
+                await fetchInitialData()
+            case .fetchMoreData:
+                await fetchMoreData()
+            }
+        }
+    }
+
+    private func fetchInitialData() async {
         currentPage = 1
         upcommingMovies = await getMovies().results
     }
 
-    func fetchMoreData() async {
+    private func fetchMoreData() async {
         currentPage += 1
         upcommingMovies += await getMovies(page: currentPage).results
     }

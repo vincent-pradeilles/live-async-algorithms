@@ -20,7 +20,7 @@ struct MoviesView: View {
                     AsyncImage(url: movie.posterURL) { poster in
                         poster
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
                             .frame(width: 100)
                     } placeholder: {
                         ProgressView()
@@ -38,20 +38,23 @@ struct MoviesView: View {
             }
             .task {
                 if movie == viewModel.movies.last {
-                    await viewModel.fetchMoreData()
+                    await viewModel.commandChannel.send(.fetchMoreData)
                 }
             }
         }
         .navigationTitle("Upcomming Movies")
         .task {
-            await viewModel.fetchInitialData()
+            await viewModel.listenToCommands()
         }
         .task {
             await viewModel.listenToSearchQuery()
         }
+        .task {
+            await viewModel.commandChannel.send(.fetchInitialData)
+        }
         .searchable(text: $viewModel.searchQuery)
         .refreshable {
-            await viewModel.fetchInitialData()
+            await viewModel.commandChannel.send(.fetchInitialData)
         }
     }
 }
