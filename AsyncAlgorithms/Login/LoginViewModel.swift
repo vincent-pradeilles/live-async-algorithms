@@ -14,12 +14,14 @@ class LoginViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var passwordConfirmation: String = ""
 
-    @Published var canLogin: Bool = false
+    @Published private(set) var canLogin: Bool = false
 
     init() {
         Publishers.CombineLatest3($userName, $password, $passwordConfirmation)
             .map { userName, password, passwordConfirmation in
-                (userName.isEmpty == false) && (password == passwordConfirmation)
+                return userName.isEmpty == false
+                    && password.isEmpty == false
+                    && password == passwordConfirmation
             }
             .assign(to: &$canLogin)
     }
