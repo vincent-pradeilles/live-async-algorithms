@@ -23,6 +23,11 @@ struct AsyncAlgorithmsApp: App {
                 .tabItem {
                     Label("Events", systemImage: "clock.arrow.2.circlepath")
                 }
+
+                LoginView()
+                .tabItem {
+                    Label("Login", systemImage: "person.fill")
+                }
             }
         }
     }
