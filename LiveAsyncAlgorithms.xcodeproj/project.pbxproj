@@ -20,6 +20,7 @@
 		BF929D31287772CA002F8F5A /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF929D2F287772CA002F8F5A /* MovieDetailsViewModel.swift */; };
 		BF929D32287772CA002F8F5A /* MovieDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF929D30287772CA002F8F5A /* MovieDetailsView.swift */; };
 		BF929D352877730E002F8F5A /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = BF929D342877730E002F8F5A /* AsyncAlgorithms */; };
+		BFD0A8EB28831B14003AE19A /* TaskCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD0A8EA28831B14003AE19A /* TaskCancellable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		BF929D2B287772C2002F8F5A /* MoviesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewModel.swift; sourceTree = "<group>"; };
 		BF929D2F287772CA002F8F5A /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
 		BF929D30287772CA002F8F5A /* MovieDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailsView.swift; sourceTree = "<group>"; };
+		BFD0A8EA28831B14003AE19A /* TaskCancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCancellable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				BF929D1128777250002F8F5A /* LiveAsyncAlgorithmsApp.swift */,
+				BFD0A8EA28831B14003AE19A /* TaskCancellable.swift */,
 				BF929D1F2877728F002F8F5A /* Model.swift */,
 				BF929D24287772B8002F8F5A /* Events */,
 				BF929D29287772C2002F8F5A /* Movies */,
@@ -207,6 +210,7 @@
 				BF929D2D287772C2002F8F5A /* MoviesViewModel.swift in Sources */,
 				BF929D27287772B8002F8F5A /* EventsViewModel.swift in Sources */,
 				BF929D1228777250002F8F5A /* LiveAsyncAlgorithmsApp.swift in Sources */,
+				BFD0A8EB28831B14003AE19A /* TaskCancellable.swift in Sources */,
 				BF929D202877728F002F8F5A /* Model.swift in Sources */,
 				BF929D28287772B8002F8F5A /* EventsView.swift in Sources */,
 				BF4DF450287A018500A0A56B /* LoginView.swift in Sources */,

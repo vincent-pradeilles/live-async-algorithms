@@ -20,6 +20,10 @@ struct LoginView: View {
                         .autocorrectionDisabled()
                     TextField("Password Confirmation", text: $viewModel.passwordConfirmation)
                         .autocorrectionDisabled()
+                    if let error = viewModel.error {
+                        Text(error.rawValue)
+                            .foregroundColor(.red)
+                    }
                 }
 
                 Section {
@@ -31,9 +35,6 @@ struct LoginView: View {
                     .disabled(viewModel.canLogin == false)
                 }
             }
-        }
-        .task {
-            await viewModel.listenToFormUpdates()
         }
     }
 }

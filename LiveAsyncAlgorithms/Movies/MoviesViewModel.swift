@@ -34,21 +34,25 @@ class MoviesViewModel: ObservableObject {
 
     private var currentPage = 1
 
-    func listenToSearchQuery() async {
-        for await searchQuery in $searchQuery.values.debounce(for: .milliseconds(300)) {
-            searchResults = await searchMovies(for: searchQuery).results
-        }
-    }
+    private var tasks = Set<TaskCancellable>()
 
-    func listenToCommands() async {
-        for await command in commandChannel {
-            switch command {
-            case .fetchInitialData:
-                await fetchInitialData()
-            case .fetchMoreData:
-                await fetchMoreData()
+    init() {
+        Task {
+            for await command in commandChannel {
+                switch command {
+                case .fetchInitialData:
+                    await fetchInitialData()
+                case .fetchMoreData:
+                    await fetchMoreData()
+                }
             }
-        }
+        }.store(in: &tasks)
+
+        Task {
+            for await searchQuery in $searchQuery.values.debounce(for: .milliseconds(300)) {
+                searchResults = await searchMovies(for: searchQuery).results
+            }
+        }.store(in: &tasks)
     }
 
     private func fetchInitialData() async {

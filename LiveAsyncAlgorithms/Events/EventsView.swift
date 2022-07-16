@@ -14,7 +14,7 @@ struct EventsView: View {
     var body: some View {
         Text(viewModel.text)
             .task {
-                await viewModel.startEvents()
+                await viewModel.listenToEvents()
             }
     }
 }

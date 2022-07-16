@@ -22,11 +22,9 @@ class MovieDetailsViewModel: ObservableObject {
     }
 
     func fetchData() async {
-        let creditsPublisher = getCredits(for: movie).map(\.cast)
-        let reviewsPublisher = getReviews(for: movie).map(\.results)
+        async let credits = getCredits(for: movie)
+        async let reviews = getReviews(for: movie)
 
-        for await (credits, reviews) in combineLatest(creditsPublisher.values, reviewsPublisher.values) {
-            data = (credits, reviews)
-        }
+        data = await (credits: credits.cast, reviews: reviews.results)
     }
 }

@@ -44,12 +44,6 @@ struct MoviesView: View {
         }
         .navigationTitle("Upcomming Movies")
         .task {
-            await viewModel.listenToCommands()
-        }
-        .task {
-            await viewModel.listenToSearchQuery()
-        }
-        .task {
             await viewModel.commandChannel.send(.fetchInitialData)
         }
         .searchable(text: $viewModel.searchQuery)

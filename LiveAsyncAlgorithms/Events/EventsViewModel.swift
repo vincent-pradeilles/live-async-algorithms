@@ -16,7 +16,7 @@ class EventsViewModel: ObservableObject {
 
     @Published var text: String = ""
 
-    func startEvents() async {
+    func listenToEvents() async {
         let peoplePublisher = Timer.publish(
             every: 1,
             on: .main,
@@ -33,11 +33,9 @@ class EventsViewModel: ObservableObject {
         .autoconnect()
         .map { _ in Self.states.randomElement()! }
 
-//        Task {
-            for await (person, state) in combineLatest(peoplePublisher.values, statePublisher.values) {
-                print("LOOP")
-                text = "\(person) is currently \(state)"
-            }
-//        }
+        for await (person, state) in combineLatest(peoplePublisher.values, statePublisher.values) {
+            print("LOOP")
+            text = "\(person) is currently \(state)"
+        }
     }
 }
