@@ -2,7 +2,7 @@
 
 ## Content
 
-This repository contains the code sample I've used during July 14th's livestream 👉 https://www.youtube.com/watch?v=5oKJ99tRZbk
+This repository contains the code sample I've used during this livestream 👉 https://www.youtube.com/watch?v=5oKJ99tRZbk
 
 The repo is organized in two branches:
 
